@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PMDMTarea03</string>
     <string name="tools">Herramientas</string>
     <string name="pokedex">Pokedex</string>
     <string name="captured">Mis Pokemons</string>

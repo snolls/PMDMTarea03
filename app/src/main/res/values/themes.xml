@@ -4,6 +4,12 @@
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/blue</item>
         <item name="android:windowBackground">@color/yellow</item>
+
+    </style>
+
+    <style name="MyBottomNavigation">
+        <item name="itemIconTint">@color/blue</item>
+        <item name="itemTextColor">@color/blue</item>
     </style>
 
     <style name="Theme.PMDMTarea03" parent="Base.Theme.PMDMTarea03" />

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_capturados">
+
+    <fragment
+        android:id="@+id/navigation_capturados"
+        android:name="com.example.pmdmtarea03.CapturedFragment"
+        tools:layout="@layout/fragment_captured" />
+
+    <fragment
+        android:id="@+id/navigation_pokedex"
+        android:name="com.example.pmdmtarea03.PokedexFragment"
+        tools:layout="@layout/fragment_pokedex" />
+
+    <fragment
+        android:id="@+id/navigation_tools"
+        android:name="com.example.pmdmtarea03.ToolsFragment"
+        tools:layout="@layout/fragment_tools" />
+</navigation>
