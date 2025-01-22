@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "44341701906",
+    "project_id": "pmdmtarea03",
+    "storage_bucket": "pmdmtarea03.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:44341701906:android:2a7fa6d3fe6ad11dbc57cb",
+        "android_client_info": {
+          "package_name": "com.example.pmdmtarea03"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAC87b8bF6GAStlrDWvc6UUQHs9M0qpx1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
