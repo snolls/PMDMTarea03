@@ -1,64 +1,67 @@
 package com.example.pmdmtarea03;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ToolsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.example.pmdmtarea03.databinding.FragmentToolsBinding;
+import com.google.firebase.auth.FirebaseAuth;
+
+
 public class ToolsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FragmentToolsBinding binding; // Variable de View Binding
+    private FirebaseAuth mAuth;
 
     public ToolsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ToolsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ToolsFragment newInstance(String param1, String param2) {
-        ToolsFragment fragment = new ToolsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        mAuth = FirebaseAuth.getInstance(); // Inicializar Firebase Auth
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tools, container, false);
+        // Inicializar View Binding
+        binding = FragmentToolsBinding.inflate(inflater, container, false);
+
+        // Retornar la vista raíz del binding
+        return binding.getRoot();
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Configurar el clic en el botón "Cerrar sesión"
+        binding.logoutLayout.setOnClickListener((View v) -> {
+            mAuth.signOut(); // Cierra sesión en Firebase
+            Toast.makeText(getActivity(), "Sesión cerrada", Toast.LENGTH_SHORT).show();
+
+            // Redirigir al usuario a la pantalla de inicio de sesión
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // Liberar el binding cuando la vista se destruya
+        binding = null;
     }
 }

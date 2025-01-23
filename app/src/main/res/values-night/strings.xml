@@ -3,4 +3,7 @@
     <string name="tools">Herramientas</string>
     <string name="pokedex">Pokedex</string>
     <string name="captured">Mis Pokemons</string>
+    <string name="switch_lang">Cambiar a Inglés</string>
+    <string name="setting_title">AJUSTES</string>
+    <string name="switch_eliminar">Eliminación de Pokémon capturados</string>
 </resources>
