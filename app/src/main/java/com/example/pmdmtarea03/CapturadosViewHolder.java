@@ -14,5 +14,9 @@ public class CapturadosViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Pokemon pokemon, NavController navController) {
+        binding.tvname.setText(pokemon.getNombre());
+        binding.tvnumero.setText(pokemon.getNumero());
+        binding.tvaltura.setText(pokemon.getImagen());
+        binding.tvpeso.setText(pokemon.getPeso());
     }
 }

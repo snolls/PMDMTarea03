@@ -15,5 +15,6 @@ public class PokemonViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Pokemon pokemon, NavController navController) {
         binding.tvname.setText(pokemon.getNombre());
+        binding.tvnumero.setText(pokemon.getNumero());
     }
 }
