@@ -44,7 +44,6 @@
                     android:id="@+id/tvname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/CardViewTextStyle"
                     android:textSize="30sp" />
 
             </LinearLayout>
