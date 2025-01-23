@@ -1,62 +1,120 @@
 package com.example.pmdmtarea03;
 
+import java.util.List;
+
 public class Pokemon {
+    private int id;
+    private String name;
+    private int height;
+    private int weight;
+    private List<TypeSlot> types;
+    private Sprites sprites;
 
-    private String nombre,tipo,imagen,peso,altura,numero;
-
-    public Pokemon(String nombre, String tipo, String imagen, String peso, String altura, String numero) {
-        this.nombre = nombre;
-        this.tipo = tipo;
-        this.imagen = imagen;
-        this.peso = peso;
-        this.altura = altura;
+    public int getId() {
+        return id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getName() {
+        return name;
     }
 
-    public String getTipo() {
-        return tipo;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public int getHeight() {
+        return height;
     }
 
-    public String getImagen() {
-        return imagen;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
+    public int getWeight() {
+        return weight;
     }
 
-    public String getPeso() {
-        return peso;
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
-    public void setPeso(String peso) {
-        this.peso = peso;
+    public List<TypeSlot> getTypes() {
+        return types;
     }
 
-    public String getAltura() {
-        return altura;
+    public void setTypes(List<TypeSlot> types) {
+        this.types = types;
     }
 
-    public void setAltura(String altura) {
-        this.altura = altura;
+    public Sprites getSprites() {
+        return sprites;
     }
 
-    public String getNumero() {
-        return numero;
+    public void setSprites(Sprites sprites) {
+        this.sprites = sprites;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public static class TypeSlot {
+        private Type type;
+
+        public Type getType() {
+            return type;
+        }
+
+        public void setType(Type type) {
+            this.type = type;
+        }
+    }
+
+    public static class Type {
+        private String name;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
+    public static class Sprites {
+        private Other other;
+
+        public Other getOther() {
+            return other;
+        }
+
+        public void setOther(Other other) {
+            this.other = other;
+        }
+
+        public static class Other {
+            private OfficialArtwork officialArtwork;
+
+            public OfficialArtwork getOfficialArtwork() {
+                return officialArtwork;
+            }
+
+            public void setOfficialArtwork(OfficialArtwork officialArtwork) {
+                this.officialArtwork = officialArtwork;
+            }
+
+            public static class OfficialArtwork {
+                private String front_default;
+
+                public String getFrontDefault() {
+                    return front_default;
+                }
+
+                public void setFrontDefault(String front_default) {
+                    this.front_default = front_default;
+                }
+            }
+        }
     }
 }
