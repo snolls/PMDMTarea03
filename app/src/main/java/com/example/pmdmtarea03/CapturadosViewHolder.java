@@ -3,20 +3,18 @@ package com.example.pmdmtarea03;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pmdmtarea03.databinding.ItemCapturadosBinding;
+import com.example.pmdmtarea03.databinding.ItemPokemonBinding;
 
 public class CapturadosViewHolder extends RecyclerView.ViewHolder {
 
-    private final ItemCapturadosBinding binding;
-    public CapturadosViewHolder(ItemCapturadosBinding binding) {
+    private final ItemPokemonBinding binding;
+    public CapturadosViewHolder(ItemPokemonBinding binding) {
         super(binding.getRoot());
         this.binding = binding;
     }
 
     public void bind(Pokemon pokemon, NavController navController) {
-        binding.tvname.setText(pokemon.getNombre());
-        binding.tvnumero.setText(pokemon.getNumero());
-        binding.tvaltura.setText(pokemon.getImagen());
-        binding.tvpeso.setText(pokemon.getPeso());
+        binding.tvname.setText(pokemon.getName());
+        binding.tvnumero.setText(pokemon.getId());
     }
 }

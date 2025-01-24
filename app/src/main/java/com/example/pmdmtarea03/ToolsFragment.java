@@ -42,6 +42,7 @@ public class ToolsFragment extends Fragment {
         // Retornar la vista raíz del binding
         return binding.getRoot();
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

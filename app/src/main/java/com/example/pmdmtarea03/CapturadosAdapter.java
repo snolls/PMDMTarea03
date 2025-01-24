@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pmdmtarea03.databinding.ItemCapturadosBinding;
+import com.example.pmdmtarea03.databinding.ItemPokemonBinding;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ public class CapturadosAdapter extends RecyclerView.Adapter<CapturadosViewHolder
     @NonNull
     @Override
     public CapturadosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CapturadosViewHolder(ItemCapturadosBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new CapturadosViewHolder(ItemPokemonBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
