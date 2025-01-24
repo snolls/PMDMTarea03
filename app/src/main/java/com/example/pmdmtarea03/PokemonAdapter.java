@@ -1,5 +1,6 @@
 package com.example.pmdmtarea03;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -22,10 +23,17 @@ import java.util.Map;
 
 public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHolder> {
 
+    public interface OnPokemonCapturedListener {
+        void onPokemonCaptured();
+    }
     private final List<Pokemon> pokemonList;
+    private final List<Pokemon> capturedPokemonList; // Lista de Pokémon capturados
+    private final OnPokemonCapturedListener listener; // Callback al fragmento
 
-    public PokemonAdapter(List<Pokemon> pokemonList) {
+    public PokemonAdapter(List<Pokemon> pokemonList, List<Pokemon> capturedPokemonList, OnPokemonCapturedListener listener) {
         this.pokemonList = pokemonList;
+        this.capturedPokemonList = capturedPokemonList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -51,10 +59,25 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
                 .load(pokemon.getSprites().getOther().getHome().getFrontDefault())
                 .into(holder.binding.pokemonImage);
 
-        // Agregar el OnClickListener para manejar el clic
-        holder.binding.cardView.setOnClickListener(view -> {
-            savePokemonToFirebase(pokemon, holder.binding.getRoot());
-        });
+        // Verificar si el Pokémon está capturado
+        boolean isCaptured = capturedPokemonList.stream()
+                .anyMatch(captured -> captured.getOrder() == pokemon.getOrder());
+
+        if (isCaptured) {
+            // Cambiar apariencia a rojo y deshabilitar clics
+            holder.binding.cardView.setCardBackgroundColor(Color.RED);
+            holder.binding.cardView.setEnabled(false);
+        } else {
+            // Restaurar apariencia normal para Pokémon no capturados
+            holder.binding.cardView.setCardBackgroundColor(Color.WHITE);
+            holder.binding.cardView.setEnabled(true);
+
+            holder.binding.cardView.setOnClickListener(view -> {
+                // Aquí puedes manejar el evento de clic para capturar al Pokémon
+                savePokemonToFirebase(pokemon, holder.binding.getRoot());
+            });
+        }
+
     }
 
     // Método para guardar el Pokémon en Firebase
@@ -78,6 +101,9 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
                 .add(pokemonData)
                 .addOnSuccessListener(documentReference -> {
                     Toast.makeText(view.getContext(), "Pokémon guardado para este usuario", Toast.LENGTH_SHORT).show();
+                    if (listener != null) {
+                        listener.onPokemonCaptured();
+                    }
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(view.getContext(), "Error al guardar en Firebase", Toast.LENGTH_SHORT).show();

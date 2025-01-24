@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.pmdmtarea03.databinding.FragmentPokedexBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,11 +23,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PokedexFragment extends Fragment {
+public class PokedexFragment extends Fragment implements PokemonAdapter.OnPokemonCapturedListener{
 
     private FragmentPokedexBinding binding;
     private PokemonAdapter adapter;
     private List<Pokemon> pokemonList = new ArrayList<>();
+
+    private List<Pokemon> capturedPokemonList = new ArrayList<>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,14 +39,19 @@ public class PokedexFragment extends Fragment {
 
         // Configurar RecyclerView
         binding.recyclerViewPokemon.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new PokemonAdapter(pokemonList);
+        adapter = new PokemonAdapter(pokemonList, capturedPokemonList, (PokemonAdapter.OnPokemonCapturedListener) this);
         binding.recyclerViewPokemon.setAdapter(adapter);
+
+        //recupera los pokemons capturados
+        fetchCapturedPokemons();
 
         // Cargar datos
         fetchPokemonList();
 
         return binding.getRoot();
     }
+
+
 
     private void fetchPokemonList() {
         RetrofitClient.getApiService().getPokemonList(0, 150).enqueue(new Callback<PokemonApiService.PokemonListResponse>() {
@@ -66,16 +77,8 @@ public class PokedexFragment extends Fragment {
             public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     pokemonList.add(response.body());
-
-                    // Ordenar la lista por el campo "order"
-                    Collections.sort(pokemonList, new Comparator<Pokemon>() {
-                        @Override
-                        public int compare(Pokemon p1, Pokemon p2) {
-                            return Integer.compare(p1.getOrder(), p2.getOrder());
-                        }
-                    });
-
-                    adapter.notifyDataSetChanged(); // Actualizar el RecyclerView
+                    pokemonList.sort(Comparator.comparingInt(Pokemon::getOrder));
+                    adapter.notifyDataSetChanged();
                 }
             }
 
@@ -84,5 +87,33 @@ public class PokedexFragment extends Fragment {
                 Log.e("PokedexFragment", "Error al cargar detalles", t);
             }
         });
+    }
+
+    private void fetchCapturedPokemons() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String uid = auth.getCurrentUser().getUid();
+
+        db.collection("pokemons")
+                .document(uid)
+                .collection("userPokemons")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    capturedPokemonList.clear();
+                    for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
+                        Pokemon pokemon = doc.toObject(Pokemon.class);
+                        if (pokemon != null) {
+                            capturedPokemonList.add(pokemon);
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                })
+                .addOnFailureListener(e -> Log.e("Firestore", "Error al recuperar Pokémon", e));
+    }
+
+    @Override
+    public void onPokemonCaptured() {
+        // Recargar los datos de Pokémon capturados y notificar al adaptador
+        fetchCapturedPokemons();
     }
 }
