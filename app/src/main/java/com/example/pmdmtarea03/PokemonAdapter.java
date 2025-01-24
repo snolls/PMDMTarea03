@@ -37,9 +37,6 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Pokemon pokemon = pokemonList.get(position);
 
-        // Configura los datos del Pokémon
-        holder.binding.tvname.setText(pokemon.getName());
-        holder.binding.tvnumero.setText(String.valueOf(pokemon.getId()));
 
     }
 
