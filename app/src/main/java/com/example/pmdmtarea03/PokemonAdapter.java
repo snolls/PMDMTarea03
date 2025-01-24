@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.bumptech.glide.Glide;
 import com.example.pmdmtarea03.databinding.ItemPokemonBinding;
 
 
@@ -36,8 +37,13 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Pokemon pokemon = pokemonList.get(position);
+        holder.binding.tvname.setText(pokemon.getName());
+        holder.binding.tvnumero.setText(String.valueOf(pokemon.getOrder()));
 
-
+        // Cargar la imagen con Glide o Picasso
+        Glide.with(holder.binding.getRoot().getContext())
+                .load(pokemon.getSprites().getOther().getHome().getFrontDefault())
+                .into(holder.binding.pokemonImage);
     }
 
     @Override

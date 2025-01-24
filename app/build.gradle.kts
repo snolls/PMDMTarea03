@@ -31,6 +31,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
+
     buildFeatures{
         viewBinding = true
     }
@@ -38,10 +39,13 @@ android {
 
 dependencies {
 
-    implementation(platform("com.google.firebase:firebase-bom:33.8.0"))
-    implementation("com.google.firebase:firebase-analytics")
-    implementation("com.firebaseui:firebase-ui-auth:7.2.0")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.ui.auth)
 
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.github.bumptech.glide:glide:4.15.1")
 
     implementation(libs.appcompat)
     implementation(libs.material)

@@ -1,54 +1,77 @@
 package com.example.pmdmtarea03;
-
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.pmdmtarea03.databinding.FragmentPokedexBinding;
-import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PokedexFragment extends Fragment {
 
     private FragmentPokedexBinding binding;
-    private FirebaseAuth mAuth;
-
-    public PokedexFragment() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance(); // Inicializar Firebase Auth
-    }
+    private PokemonAdapter adapter;
+    private List<Pokemon> pokemonList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inicializar View Binding
         binding = FragmentPokedexBinding.inflate(inflater, container, false);
 
-        // Configuración del RecyclerView
+        // Configurar RecyclerView
         binding.recyclerViewPokemon.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new PokemonAdapter(pokemonList);
+        binding.recyclerViewPokemon.setAdapter(adapter);
 
+        // Cargar datos
+        fetchPokemonList();
 
-        // Retornar la vista raíz del binding
         return binding.getRoot();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null; // Liberar el binding para evitar memory leaks
+    private void fetchPokemonList() {
+        RetrofitClient.getApiService().getPokemonList(0, 150).enqueue(new Callback<PokemonApiService.PokemonListResponse>() {
+            @Override
+            public void onResponse(Call<PokemonApiService.PokemonListResponse> call, Response<PokemonApiService.PokemonListResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    for (PokemonApiService.PokemonListResponse.Result result : response.body().getResults()) {
+                        fetchPokemonDetails(result.getName());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PokemonApiService.PokemonListResponse> call, Throwable t) {
+                Log.e("PokedexFragment", "Error al cargar la lista", t);
+            }
+        });
     }
 
+    private void fetchPokemonDetails(String name) {
+        RetrofitClient.getApiService().getPokemonDetails(name).enqueue(new Callback<Pokemon>() {
+            @Override
+            public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    pokemonList.add(response.body());
+                    adapter.notifyItemInserted(pokemonList.size() - 1);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<Pokemon> call, Throwable t) {
+                Log.e("PokedexFragment", "Error al cargar detalles", t);
+            }
+        });
+    }
 }
