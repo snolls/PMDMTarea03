@@ -4,12 +4,12 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.NavController;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.pmdmtarea03.databinding.ItemPokemonBinding;
-import com.squareup.picasso.Picasso;
+
 
 import java.util.List;
 
@@ -41,9 +41,6 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
         holder.binding.tvname.setText(pokemon.getName());
         holder.binding.tvnumero.setText(String.valueOf(pokemon.getId()));
 
-        // Carga la imagen del Pokémon usando Picasso
-        Picasso.get().load(pokemon.getSprites().getOther().getOfficialArtwork().getFrontDefault())
-                .into(holder.binding.pokemonImage);
     }
 
     @Override

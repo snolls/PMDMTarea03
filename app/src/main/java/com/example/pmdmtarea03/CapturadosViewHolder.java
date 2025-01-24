@@ -14,7 +14,6 @@ public class CapturadosViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Pokemon pokemon, NavController navController) {
-        binding.tvname.setText(pokemon.getName());
-        binding.tvnumero.setText(pokemon.getId());
+
     }
 }
