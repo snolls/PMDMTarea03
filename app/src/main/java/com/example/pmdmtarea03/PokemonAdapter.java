@@ -2,6 +2,8 @@ package com.example.pmdmtarea03;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -10,9 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.pmdmtarea03.databinding.ItemPokemonBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHolder> {
 
@@ -44,6 +50,38 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
         Glide.with(holder.binding.getRoot().getContext())
                 .load(pokemon.getSprites().getOther().getHome().getFrontDefault())
                 .into(holder.binding.pokemonImage);
+
+        // Agregar el OnClickListener para manejar el clic
+        holder.binding.cardView.setOnClickListener(view -> {
+            savePokemonToFirebase(pokemon, holder.binding.getRoot());
+        });
+    }
+
+    // Método para guardar el Pokémon en Firebase
+    private void savePokemonToFirebase(Pokemon pokemon, LinearLayout view) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String uid = auth.getCurrentUser().getUid();
+
+        Map<String, Object> pokemonData = new HashMap<>();
+        pokemonData.put("name", pokemon.getName());
+        pokemonData.put("order", pokemon.getOrder());
+        pokemonData.put("height", pokemon.getHeight());
+        pokemonData.put("weight", pokemon.getWeight());
+        pokemonData.put("type", pokemon.getTypes().get(0).getType().getName());
+        pokemonData.put("image", pokemon.getSprites().getOther().getHome().getFrontDefault());
+
+        // Guardar los datos en una subcolección por usuario
+        db.collection("pokemons")
+                .document(uid) // Crear un documento por usuario
+                .collection("userPokemons") // Subcolección para los Pokémon del usuario
+                .add(pokemonData)
+                .addOnSuccessListener(documentReference -> {
+                    Toast.makeText(view.getContext(), "Pokémon guardado para este usuario", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(view.getContext(), "Error al guardar en Firebase", Toast.LENGTH_SHORT).show();
+                });
     }
 
     @Override

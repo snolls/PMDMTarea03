@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import com.example.pmdmtarea03.databinding.FragmentPokedexBinding;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -64,7 +66,16 @@ public class PokedexFragment extends Fragment {
             public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     pokemonList.add(response.body());
-                    adapter.notifyItemInserted(pokemonList.size() - 1);
+
+                    // Ordenar la lista por el campo "order"
+                    Collections.sort(pokemonList, new Comparator<Pokemon>() {
+                        @Override
+                        public int compare(Pokemon p1, Pokemon p2) {
+                            return Integer.compare(p1.getOrder(), p2.getOrder());
+                        }
+                    });
+
+                    adapter.notifyDataSetChanged(); // Actualizar el RecyclerView
                 }
             }
 
