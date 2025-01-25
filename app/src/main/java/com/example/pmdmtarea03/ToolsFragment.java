@@ -43,7 +43,6 @@ public class ToolsFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance(); // Inicializar Firebase Auth
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inicializar View Binding para acceder a las vistas definidas en el layout
