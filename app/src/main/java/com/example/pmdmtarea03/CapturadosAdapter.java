@@ -49,10 +49,16 @@ public class CapturadosAdapter extends RecyclerView.Adapter<CapturadosAdapter.Vi
         holder.binding.tvnumero.setText(String.valueOf(pokemon.getOrder()));
 
         // Cargar la imagen con Glide
-        Glide.with(holder.binding.getRoot().getContext())
-                .load(pokemon.getSprites().getOther().getHome().getFrontDefault())
-                .into(holder.binding.pokemonImage);
+        // Validar las propiedades antes de usar Glide para cargar la imagen
+        if (pokemon.getSprites() != null &&
+                pokemon.getSprites().getOther() != null &&
+                pokemon.getSprites().getOther().getHome().getFrontDefault() != null) {
 
+            Glide.with(holder.binding.getRoot().getContext())
+                    .load(pokemon.getSprites().getOther().getHome().getFrontDefault())
+                    .into(holder.binding.pokemonImage);
+        } else {
+        }
     }
 
     @Override
