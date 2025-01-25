@@ -13,6 +13,22 @@ public class Pokemon {
 
     private List<TypeWrapper> types;
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
     @SerializedName("sprites")
     private Sprites sprites;
 
@@ -42,6 +58,12 @@ public class Pokemon {
         return sprites;
     }
 
+    public void setTypes(List<TypeWrapper> types) {
+    }
+
+    public void setSprites(Sprites sprites) {
+    }
+
     public static class TypeWrapper {
         private Type type;
 
@@ -49,11 +71,18 @@ public class Pokemon {
             return type;
         }
 
+        public void setType(Type typeObj) {
+        }
+
         public static class Type {
             private String name;
 
             public String getName() {
                 return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
             }
         }
     }
@@ -66,6 +95,9 @@ public class Pokemon {
             return other;
         }
 
+        public void setOther(OtherSprites otherSprites) {
+        }
+
         public static class OtherSprites {
             @SerializedName("home")
             private Home home;
@@ -74,12 +106,19 @@ public class Pokemon {
                 return home;
             }
 
+            public void setHome(Home home) {
+            }
+
             public static class Home {
                 @SerializedName("front_default")
                 private String frontDefault;
 
                 public String getFrontDefault() {
                     return frontDefault;
+                }
+
+                public void setFrontDefault(String frontDefault) {
+                    this.frontDefault = frontDefault;
                 }
             }
         }
