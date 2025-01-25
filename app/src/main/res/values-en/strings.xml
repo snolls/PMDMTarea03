@@ -29,4 +29,5 @@
     <string name="error_saving_pokemon">Error saving to Firebase</string>
     <string name="medida_altura">Decimeters</string>
     <string name="medida_peso">Hectograms</string>
+    <string name="sesion_closed">Session Closed</string>
 </resources>

@@ -13,19 +13,20 @@ import com.bumptech.glide.Glide;
 import com.example.pmdmtarea03.databinding.FragmentCapturedBinding;
 import com.example.pmdmtarea03.databinding.FragmentDetailsBinding;
 import com.example.pmdmtarea03.databinding.FragmentToolsBinding;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-
+/**
+ * Fragmento que muestra los detalles de un Pokémon capturado.
+ */
 public class DetailsFragment extends Fragment {
-    private FragmentDetailsBinding binding;
 
+    private FragmentDetailsBinding binding; // View Binding para acceder a las vistas del fragmento
 
     public DetailsFragment() {
-        // Required empty public constructor
+        // Constructor público requerido para Fragment
     }
 
     @Override
@@ -38,67 +39,73 @@ public class DetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inicializar View Binding
         binding = FragmentDetailsBinding.inflate(inflater, container, false);
-        // Inicializar el mapa de tipos e imágenes
+
+        // Inicializar el mapa que contiene las imágenes correspondientes a cada tipo de Pokémon
         initializeTypeImageMap();
 
-        // Obtener los datos del Bundle
+        // Obtener los datos pasados a través del Bundle
         Bundle args = getArguments();
         if (args != null) {
-            String name = Objects.requireNonNull(args.getString("name")).toUpperCase();
-            int order = args.getInt("order");
-            int height = args.getInt("height");
-            int weight = args.getInt("weight");
-            String type = args.getString("type");
-            String image = args.getString("image");
+            // Obtener los valores del Bundle
+            String name = Objects.requireNonNull(args.getString("name")).toUpperCase(); // Nombre del Pokémon
+            int order = args.getInt("order"); // Número del Pokémon
+            int height = args.getInt("height"); // Altura del Pokémon
+            int weight = args.getInt("weight"); // Peso del Pokémon
+            String type = args.getString("type"); // Tipo del Pokémon
+            String image = args.getString("image"); // URL de la imagen del Pokémon
 
-            String medida = getString(R.string.medida_altura);
+            // Configurar los textos de las medidas
+            String medida = getString(R.string.medida_altura); // Obtener unidad de altura desde los recursos
+            binding.tvName.setText(name); // Asignar el nombre del Pokémon
+            binding.tvNumber.setText(String.format("#%s", String.valueOf(order))); // Asignar el número del Pokémon
+            binding.pesoTv.setText(String.format("%s %s", String.valueOf(height), medida)); // Configurar altura
 
-            // Configurar los datos en la UI
-            binding.tvName.setText(name);
-            binding.tvNumber.setText(String.format("#%s", String.valueOf(order)));
-            binding.pesoTv.setText(String.format("%s %s", String.valueOf(height), medida));
-            medida = getString(R.string.medida_peso);
-            binding.alturaTv.setText(String.format("%s %s", String.valueOf(weight), medida));
-            // Cargar la imagen del tipo
+            medida = getString(R.string.medida_peso); // Obtener unidad de peso desde los recursos
+            binding.alturaTv.setText(String.format("%s %s", String.valueOf(weight), medida)); // Configurar peso
+
+            // Cargar la imagen correspondiente al tipo del Pokémon
             Integer typeImageResId = typeImageMap.get(type);
             if (typeImageResId != null) {
-                binding.tipoPokemon.setImageResource(typeImageResId);
+                binding.tipoPokemon.setImageResource(typeImageResId); // Establecer la imagen según el tipo
             }
-            // Cargar la imagen usando Glide
+
+            // Cargar la imagen del Pokémon usando Glide
             Glide.with(requireContext())
-                    .load(image)
-                    .into((ImageView) binding.rectangularImage); // Asegúrate de que este ID coincida con el XML
+                    .load(image) // URL de la imagen
+                    .into((ImageView) binding.rectangularImage); // Asignar al ImageView correspondiente
         }
 
-        // Configurar el botón de retroceso
+        // Configurar el botón de retroceso para regresar al fragmento anterior
         binding.btnBack.setOnClickListener(v -> {
-            requireActivity().getSupportFragmentManager().popBackStack(); // Regresa al fragmento anterior
+            requireActivity().getSupportFragmentManager().popBackStack(); // Navegar hacia atrás
         });
 
-        return binding.getRoot();
+        return binding.getRoot(); // Retornar la vista raíz del fragmento
     }
 
-    private Map<String, Integer> typeImageMap;
+    private Map<String, Integer> typeImageMap; // Mapa para relacionar tipos de Pokémon con imágenes
 
+    /**
+     * Inicializa el mapa que contiene los tipos de Pokémon y sus imágenes correspondientes.
+     */
     private void initializeTypeImageMap() {
         typeImageMap = new HashMap<>();
-        typeImageMap.put("bug", R.drawable.bug_type);
-        typeImageMap.put("dragon", R.drawable.dragon_type);
-        typeImageMap.put("electric", R.drawable.electric_type);
-        typeImageMap.put("fairy", R.drawable.psychic_type);
-        typeImageMap.put("fighting", R.drawable.fighting_type);
-        typeImageMap.put("fire", R.drawable.fire_type);
-        typeImageMap.put("flying", R.drawable.flying_type);
-        typeImageMap.put("ghost", R.drawable.ghost_type);
-        typeImageMap.put("grass", R.drawable.grass_type);
-        typeImageMap.put("ground", R.drawable.ground_type);
-        typeImageMap.put("ice", R.drawable.ice_type);
-        typeImageMap.put("poison", R.drawable.poison_type);
-        typeImageMap.put("psychic", R.drawable.psychic_type);
-        typeImageMap.put("rock", R.drawable.rock_type);
-        typeImageMap.put("water", R.drawable.water_type);
+        typeImageMap.put("bug", R.drawable.bug_type); // Tipo bicho
+        typeImageMap.put("dragon", R.drawable.dragon_type); // Tipo dragón
+        typeImageMap.put("electric", R.drawable.electric_type); // Tipo eléctrico
+        typeImageMap.put("fairy", R.drawable.psychic_type); // Tipo hada
+        typeImageMap.put("fighting", R.drawable.fighting_type); // Tipo lucha
+        typeImageMap.put("fire", R.drawable.fire_type); // Tipo fuego
+        typeImageMap.put("flying", R.drawable.flying_type); // Tipo volador
+        typeImageMap.put("ghost", R.drawable.ghost_type); // Tipo fantasma
+        typeImageMap.put("grass", R.drawable.grass_type); // Tipo planta
+        typeImageMap.put("ground", R.drawable.ground_type); // Tipo tierra
+        typeImageMap.put("ice", R.drawable.ice_type); // Tipo hielo
+        typeImageMap.put("poison", R.drawable.poison_type); // Tipo veneno
+        typeImageMap.put("psychic", R.drawable.psychic_type); // Tipo psíquico
+        typeImageMap.put("rock", R.drawable.rock_type); // Tipo roca
+        typeImageMap.put("water", R.drawable.water_type); // Tipo agua
 
-        // Añade más tipos según sea necesario
+        // Añadir más tipos según sea necesario
     }
-
 }
