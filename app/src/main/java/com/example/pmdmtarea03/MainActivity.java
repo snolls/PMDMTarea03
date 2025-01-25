@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -18,29 +19,37 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
 
-        BottomNavigationView navView = binding.navView;
-
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_capturados, R.id.navigation_pokedex, R.id.navigation_tools)
-                .build();
-
-        // Obtén el NavHostFragment primero
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.nav_host_fragment_activity_main);
-
-        // Asegúrate de que el NavHostFragment no sea nulo
-        if (navHostFragment != null) {
-            NavController navController = navHostFragment.getNavController();
-            NavigationUI.setupWithNavController(binding.navView, navController);
+        // Establecer el fragmento inicial
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.nav_host_fragment_activity_main, new CapturedFragment())
+                    .commit();
         }
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            Fragment selectedFragment = null;
+
+            if (item.getItemId() == R.id.navigation_pokedex) {
+                selectedFragment = new PokedexFragment();
+            } else if (item.getItemId() == R.id.navigation_capturados) {
+                selectedFragment = new CapturedFragment();
+            } else if (item.getItemId() == R.id.navigation_tools) {
+                selectedFragment = new ToolsFragment();
+            }
+
+            if (selectedFragment != null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.nav_host_fragment_activity_main, selectedFragment)
+                        .commit();
+            }
+            return true;
+        });
     }
 }

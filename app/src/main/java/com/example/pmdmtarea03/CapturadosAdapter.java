@@ -38,7 +38,7 @@ public class CapturadosAdapter extends RecyclerView.Adapter<CapturadosAdapter.Vi
         PokemonCaptured pokemon = pokemons.get(position);
 
         holder.binding.tvname.setText(pokemon.getName());
-        holder.binding.tvnumero.setText(String.valueOf(pokemon.getOrder()));
+        holder.binding.tvnumero.setText("#"+String.valueOf(pokemon.getOrder()));
         Glide.with(holder.binding.getRoot().getContext())
                 .load(pokemon.getImage())
                 .into(holder.binding.pokemonImage);

@@ -52,7 +52,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Pokemon pokemon = pokemonList.get(position);
         holder.binding.tvname.setText(pokemon.getName());
-        holder.binding.tvnumero.setText(String.valueOf(pokemon.getOrder()));
+        holder.binding.tvnumero.setText("#"+String.valueOf(pokemon.getOrder()));
 
         // Cargar la imagen con Glide o Picasso
         Glide.with(holder.binding.getRoot().getContext())

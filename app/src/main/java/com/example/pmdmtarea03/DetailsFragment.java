@@ -52,7 +52,7 @@ public class DetailsFragment extends Fragment {
 
             // Configurar los datos en la UI
             binding.tvName.setText(name);
-            binding.tvNumber.setText(String.valueOf(order));
+            binding.tvNumber.setText("#"+String.valueOf(order));
             binding.tvHeight.setText(String.format("Height: %d", height));
             binding.tvWeight.setText(String.format("Weight: %d", weight));
             // Cargar la imagen del tipo
