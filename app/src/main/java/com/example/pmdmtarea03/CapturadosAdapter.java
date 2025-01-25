@@ -16,7 +16,7 @@ import java.util.List;
 public class CapturadosAdapter extends RecyclerView.Adapter<CapturadosAdapter.ViewHolder> {
 
     public interface OnPokemonDeleteListener {
-        void onPokemonDelete();
+        void onPokemonDeleted(Pokemon pokemon);
     }
 
 
@@ -48,7 +48,7 @@ public class CapturadosAdapter extends RecyclerView.Adapter<CapturadosAdapter.Vi
         holder.binding.tvname.setText(pokemon.getName());
         holder.binding.tvnumero.setText(String.valueOf(pokemon.getOrder()));
 
-        // Cargar la imagen con Glide o Picasso
+        // Cargar la imagen con Glide
         Glide.with(holder.binding.getRoot().getContext())
                 .load(pokemon.getSprites().getOther().getHome().getFrontDefault())
                 .into(holder.binding.pokemonImage);
