@@ -11,4 +11,6 @@
     <string name="tipo_pokemon">Tipo</string>
     <string name="peso_pokemon">Peso</string>
     <string name="altura_pokemon">Altura</string>
+    <string name="esp_lang">Español</string>
+    <string name="eng_lang">Ingles</string>
 </resources>
