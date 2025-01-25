@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PMDMTarea03</string>
+    <string name="tools">Tools</string>
+    <string name="pokedex">Pokedex</string>
+    <string name="captured">My Pokemons</string>
+    <string name="switch_lang">Switch to English</string>
+    <string name="setting_title">SETTINGS</string>
+    <string name="switch_eliminar">Remove captured Pokémons</string>
+    <string name="nombre_pokemon">Pokemon Name</string>
+    <string name="numero">1</string>
+    <string name="tipo_pokemon">Type</string>
+    <string name="peso_pokemon">Weight</string>
+    <string name="altura_pokemon">Height</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="esp_lang">Spanish</string>
+    <string name="eng_lang">English</string>
+
+</resources>

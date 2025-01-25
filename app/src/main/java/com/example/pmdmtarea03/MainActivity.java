@@ -1,5 +1,8 @@
 package com.example.pmdmtarea03;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -17,10 +20,19 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.pmdmtarea03.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
+
+    private static final String PREFS_NAME = "AppPrefs";
+    private static final String LANGUAGE_KEY = "language";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Cargar idioma desde SharedPreferences antes de establecer el diseño
+        loadLanguagePreference();
+        
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -51,5 +63,27 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+    }
+
+    /**
+     * Carga el idioma almacenado en SharedPreferences.
+     */
+    private void loadLanguagePreference() {
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        String languageCode = prefs.getString(LANGUAGE_KEY, "es"); // Español por defecto
+        setLocale(languageCode);
+    }
+
+    /**
+     * Configura la aplicación para usar el idioma seleccionado.
+     *
+     * @param languageCode El código de idioma a utilizar (por ejemplo, "es" para español, "en" para inglés).
+     */
+    private void setLocale(String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.setLocale(locale);
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
     }
 }

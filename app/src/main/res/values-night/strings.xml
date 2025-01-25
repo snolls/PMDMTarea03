@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">PMDMTarea03</string>
     <string name="tools">Herramientas</string>
     <string name="pokedex">Pokedex</string>
     <string name="captured">Mis Pokemons</string>
@@ -11,6 +12,8 @@
     <string name="tipo_pokemon">Tipo</string>
     <string name="peso_pokemon">Peso</string>
     <string name="altura_pokemon">Altura</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="esp_lang">Español</string>
     <string name="eng_lang">Ingles</string>
 </resources>
