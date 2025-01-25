@@ -77,4 +77,32 @@ PMDMTarea03 es una Pokédex interactiva que permite a los usuarios explorar, cap
 
 - **Glide:**
   - Cargar y mostrar imágenes de los Pokémon de manera eficiente.
+ 
+---
+
+## Capturas de Pantalla
+
+### LogIn
+
+![image](https://github.com/user-attachments/assets/d9ecd53b-18c0-48f4-907a-a8133e038e2c)
+
+### Pokedex
+
+![image](https://github.com/user-attachments/assets/aae0f5b5-3c70-4cc1-9eb7-a01ae00f5eca)
+
+### Pokemons Capturados
+
+![image](https://github.com/user-attachments/assets/591124de-125c-4cf0-a1e1-39b554879074)
+
+### Detalles del Pokemon
+
+![image](https://github.com/user-attachments/assets/1835523e-783c-4991-b564-f086a6ec3f31)
+
+### Ajustes
+
+![image](https://github.com/user-attachments/assets/328db9b3-0b2c-44c1-8716-96fa2484d38f)
+
+
+
+
 
