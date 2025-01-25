@@ -16,5 +16,17 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="esp_lang">Spanish</string>
     <string name="eng_lang">English</string>
-
+    <string name="idioma">Language</string>
+    <string name="delete_pokemon">Delete my Pokémon</string>
+    <string name="about">About</string>
+    <string name="logoff">Log off</string>
+    <string name="altura">Height</string>
+    <string name="volver">Back</string>
+    <string name="about_title">About</string>
+    <string name="about_message">Application developed by Alejandro Perez Soto. Version 1.0</string>
+    <string name="accept">OK</string>
+    <string name="pokemon_saved">Pokémon successfully saved for this user</string>
+    <string name="error_saving_pokemon">Error saving to Firebase</string>
+    <string name="medida_altura">Decimeters</string>
+    <string name="medida_peso">Hectograms</string>
 </resources>

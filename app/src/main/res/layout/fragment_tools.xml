@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingStart="16dp"
-                android:text="Idioma"
+                android:text="@string/idioma"
                 android:textSize="16sp" />
 
             <TextView
@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingStart="16dp"
-                android:text="Eliminar mis pokémon"
+                android:text="@string/delete_pokemon"
                 android:textSize="16sp" />
 
             <Switch
@@ -117,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingStart="16dp"
-                android:text="Acerca de"
+                android:text="@string/about"
                 android:textSize="16sp" />
 
             <ImageView
@@ -145,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingStart="16dp"
-                android:text="Cerrar sesión"
+                android:text="@string/logoff"
                 android:textSize="16sp" />
 
             <ImageView

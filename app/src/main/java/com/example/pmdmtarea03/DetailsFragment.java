@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 
 public class DetailsFragment extends Fragment {
@@ -43,18 +44,21 @@ public class DetailsFragment extends Fragment {
         // Obtener los datos del Bundle
         Bundle args = getArguments();
         if (args != null) {
-            String name = args.getString("name");
+            String name = Objects.requireNonNull(args.getString("name")).toUpperCase();
             int order = args.getInt("order");
             int height = args.getInt("height");
             int weight = args.getInt("weight");
             String type = args.getString("type");
             String image = args.getString("image");
 
+            String medida = getString(R.string.medida_altura);
+
             // Configurar los datos en la UI
             binding.tvName.setText(name);
-            binding.tvNumber.setText("#"+String.valueOf(order));
-            binding.pesoTv.setText(String.valueOf(height));
-            binding.alturaTv.setText(String.valueOf(weight));
+            binding.tvNumber.setText(String.format("#%s", String.valueOf(order)));
+            binding.pesoTv.setText(String.format("%s %s", String.valueOf(height), medida));
+            medida = getString(R.string.medida_peso);
+            binding.alturaTv.setText(String.format("%s %s", String.valueOf(weight), medida));
             // Cargar la imagen del tipo
             Integer typeImageResId = typeImageMap.get(type);
             if (typeImageResId != null) {

@@ -3,6 +3,7 @@ package com.example.pmdmtarea03;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -86,4 +87,6 @@ public class MainActivity extends AppCompatActivity {
         config.setLocale(locale);
         getResources().updateConfiguration(config, getResources().getDisplayMetrics());
     }
+
+
 }

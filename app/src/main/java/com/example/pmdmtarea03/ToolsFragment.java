@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,8 +31,9 @@ public class ToolsFragment extends Fragment {
 
     private FragmentToolsBinding binding; // Variable de View Binding
     private FirebaseAuth mAuth;
-    private static final String PREFS_NAME = "app_prefs";
+    private static final String PREFS_NAME = "AppPrefs";
     private static final String LANGUAGE_KEY = "language";
+    private static final String BORRADO_KEY = "borrar";
 
     public ToolsFragment() {
         // Required empty public constructor
@@ -56,33 +60,33 @@ public class ToolsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Cargar el idioma actual desde SharedPreferences
         SharedPreferences prefs = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         String languageCode = prefs.getString(LANGUAGE_KEY, "es"); // Español por defecto
 
-        // Configurar el estado del switch según el idioma
+        // Configurar el estado inicial del switch de idioma
         binding.switchLang.setChecked("en".equals(languageCode));
 
-        // Escuchar cambios en el SwitchCompat
-        binding.switchLang.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            /**
-             * Controla los cambios en el SwitchCompat para cambiar el idioma de la aplicación.
-             *
-             * @param buttonView El SwitchCompat que se ha pulsado.
-             * @param isChecked Indica si el SwitchCompat está activado o desactivado.
-             */
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    changeLanguage("en"); // Cambiar a inglés
-                } else {
-                    changeLanguage("es"); // Cambiar a español
-                }
+        // Configurar el estado inicial del switch de eliminación
+        boolean isDeleteEnabled = prefs.getBoolean(BORRADO_KEY, false); // Estado predeterminado: false
+        binding.switchDeletePokemon.setChecked(isDeleteEnabled);
+
+        // Listener para el Switch de idioma
+        binding.switchLang.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                changeLanguage("en");
+            } else {
+                changeLanguage("es");
             }
         });
 
-        // Configurar el clic en el botón "Cerrar sesión"
-        binding.logoutLayout.setOnClickListener((View v) -> {
+        // Listener para el Switch de eliminación
+        binding.switchDeletePokemon.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+            sharedPreferences.edit().putBoolean(BORRADO_KEY, isChecked).apply();
+        });
+
+        // Configurar el clic en "Cerrar sesión"
+        binding.logoutLayout.setOnClickListener(v -> {
             mAuth.signOut(); // Cierra sesión en Firebase
             Toast.makeText(getActivity(), "Sesión cerrada", Toast.LENGTH_SHORT).show();
 
@@ -91,7 +95,21 @@ public class ToolsFragment extends Fragment {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });
+
+        // Configurar el clic en "Acerca de"
+        binding.aboutLayout.setOnClickListener(v -> {
+            String title = getString(R.string.about_title);
+            String message = getString(R.string.about_message);
+            String positiveButtonText = getString(R.string.accept);
+
+            new AlertDialog.Builder(requireContext())
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setPositiveButton(positiveButtonText, (dialog, which) -> dialog.dismiss())
+                    .show();
+        });
     }
+
 
     /**
      * Cambia el idioma de la aplicación y reinicia la actividad principal para aplicar los cambios.

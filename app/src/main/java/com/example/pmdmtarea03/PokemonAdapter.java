@@ -1,5 +1,7 @@
 package com.example.pmdmtarea03;
 
+import static android.provider.Settings.System.getString;
+
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -51,8 +53,8 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Pokemon pokemon = pokemonList.get(position);
-        holder.binding.tvname.setText(pokemon.getName());
-        holder.binding.tvnumero.setText("#"+String.valueOf(pokemon.getOrder()));
+        holder.binding.tvname.setText(pokemon.getName().toUpperCase());
+        holder.binding.tvnumero.setText(String.format("#%s", String.valueOf(pokemon.getOrder())));
 
         // Cargar la imagen con Glide o Picasso
         Glide.with(holder.binding.getRoot().getContext())
@@ -94,19 +96,23 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
         pokemonData.put("type", pokemon.getTypes().get(0).getType().getName());
         pokemonData.put("image", pokemon.getSprites().getOther().getHome().getFrontDefault());
 
+        // Obtener los mensajes traducidos desde strings.xml
+        String successMessage = view.getContext().getString(R.string.pokemon_saved);
+        String errorMessage = view.getContext().getString(R.string.error_saving_pokemon);
+
         // Guardar los datos en una subcolección por usuario
         db.collection("pokemons")
                 .document(uid) // Crear un documento por usuario
                 .collection("userPokemons") // Subcolección para los Pokémon del usuario
                 .add(pokemonData)
                 .addOnSuccessListener(documentReference -> {
-                    Toast.makeText(view.getContext(), "Pokémon guardado para este usuario", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), successMessage, Toast.LENGTH_SHORT).show();
                     if (listener != null) {
                         listener.onPokemonCaptured();
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(view.getContext(), "Error al guardar en Firebase", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), errorMessage, Toast.LENGTH_SHORT).show();
                 });
     }
 

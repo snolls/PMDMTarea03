@@ -15,4 +15,17 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="esp_lang">Español</string>
     <string name="eng_lang">Ingles</string>
+    <string name="idioma">Idioma</string>
+    <string name="delete_pokemon">Eliminar mis pokémon</string>
+    <string name="about">Acerca de</string>
+    <string name="logoff">Cerrar sesión</string>
+    <string name="altura">Altura</string>
+    <string name="volver">Volver</string>
+    <string name="about_title">Acerca de</string>
+    <string name="about_message">Aplicación desarrollada por Alejandro Perez Soto. Versión 1.0</string>
+    <string name="accept">Aceptar</string>
+    <string name="pokemon_saved">Pokémon guardado para este usuario</string>
+    <string name="error_saving_pokemon">Error al guardar en Firebase</string>
+    <string name="medida_altura">Decimetros</string>
+    <string name="medida_peso">Hectogramos</string>
 </resources>
