@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="100dp">
 
     <!-- Contenedor principal con bordes redondeados y sombra -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +25,7 @@
 
         <!-- Imagen rectangular superior -->
 
-        <View
+        <ImageView
             android:id="@+id/rectangular_image"
             android:layout_width="344dp"
             android:layout_height="227dp"
@@ -114,6 +116,15 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Volver"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

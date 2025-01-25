@@ -10,10 +10,16 @@ import java.util.List;
 
 public class CapturadosAdapter extends RecyclerView.Adapter<CapturadosAdapter.ViewHolder> {
 
-    private List<Pokemon> pokemons;
+    public interface OnItemClickListener {
+        void onItemClick(PokemonCaptured pokemon);
+    }
 
-    public CapturadosAdapter(List<Pokemon> pokemons) {
+    private List<PokemonCaptured> pokemons;
+    private OnItemClickListener listener;
+
+    public CapturadosAdapter(List<PokemonCaptured> pokemons, OnItemClickListener listener) {
         this.pokemons = pokemons;
+        this.listener = listener;
     }
 
     @NonNull
@@ -29,13 +35,19 @@ public class CapturadosAdapter extends RecyclerView.Adapter<CapturadosAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Pokemon pokemon = pokemons.get(position);
+        PokemonCaptured pokemon = pokemons.get(position);
 
         holder.binding.tvname.setText(pokemon.getName());
         holder.binding.tvnumero.setText(String.valueOf(pokemon.getOrder()));
         Glide.with(holder.binding.getRoot().getContext())
-                .load(pokemon.getSprites().getOther().getHome().getFrontDefault())
+                .load(pokemon.getImage())
                 .into(holder.binding.pokemonImage);
+
+        holder.itemView.setOnClickListener(view -> {
+            if (listener != null) {
+                listener.onItemClick(pokemon);
+            }
+        });
     }
 
     @Override

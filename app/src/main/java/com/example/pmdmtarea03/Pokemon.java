@@ -72,6 +72,7 @@ public class Pokemon {
         }
 
         public void setType(Type typeObj) {
+
         }
 
         public static class Type {
