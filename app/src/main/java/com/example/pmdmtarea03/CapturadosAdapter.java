@@ -15,17 +15,11 @@ import java.util.List;
 
 public class CapturadosAdapter extends RecyclerView.Adapter<CapturadosAdapter.ViewHolder> {
 
-    public interface OnPokemonDeleteListener {
-        void onPokemonDeleted(Pokemon pokemon);
-    }
 
 
-    private final List<Pokemon> capturedPokemonList; // Lista de Pokémon capturados
-    private final CapturadosAdapter.OnPokemonDeleteListener listener; // Callback al fragmento
 
-    public CapturadosAdapter(List<Pokemon> capturedPokemonList, OnPokemonDeleteListener listener) {
-        this.capturedPokemonList = capturedPokemonList;
-        this.listener = listener;
+    public CapturadosAdapter() {
+
 
     }
 
@@ -44,26 +38,12 @@ public class CapturadosAdapter extends RecyclerView.Adapter<CapturadosAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Pokemon pokemon = capturedPokemonList.get(position);
-        holder.binding.tvname.setText(pokemon.getName());
-        holder.binding.tvnumero.setText(String.valueOf(pokemon.getOrder()));
 
-        // Cargar la imagen con Glide
-        // Validar las propiedades antes de usar Glide para cargar la imagen
-        if (pokemon.getSprites() != null &&
-                pokemon.getSprites().getOther() != null &&
-                pokemon.getSprites().getOther().getHome().getFrontDefault() != null) {
-
-            Glide.with(holder.binding.getRoot().getContext())
-                    .load(pokemon.getSprites().getOther().getHome().getFrontDefault())
-                    .into(holder.binding.pokemonImage);
-        } else {
-        }
     }
 
     @Override
     public int getItemCount() {
-        return capturedPokemonList.size();
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
